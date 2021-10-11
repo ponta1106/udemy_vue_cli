@@ -7,12 +7,9 @@ import LikeFooter from './components/LikeFooter.vue'
 Vue.config.productionTip = false;
 // ↓コンポーネントをグローバル登録
 Vue.component('LikeNumber', LikeNumber);
-Vue.component('LikeFooter', LikeFooter);
-Vue.directive("border", function(el, binding) {
-  el.style.border = "solid black 2px";
-  // v-borderで指定した値を使用する
-  el.style.borderWidth = binding.value.width;
-  el.style.color = binding.value.color;
+Vue.component('LikeFooter',        LikeFooter);
+Vue.filter("upperCase", function(value) {
+  return value.toUpperCase();
 });
 
 
