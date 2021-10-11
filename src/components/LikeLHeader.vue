@@ -1,14 +1,11 @@
-<!-- App.vueで書いたLikeHeaderタグの内容が入る -->
 <template>
   <div>
-    <slot name="title" :user="user" text="text"></slot>
+    <h1>LikeHeader.vueのコンポーネント</h1>
     <slot></slot>
-    <p>いいねの数</p>
-    <slot name="number"></slot>
   </div>
 </template>
 
-<script>
+<script> 
 export default {
   data() {
     return {
