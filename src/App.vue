@@ -13,26 +13,20 @@
       <LikeNumber :total-number="number" @my-click="incrementNumber"></LikeNumber>
 
       <p>ボタン押下で切り替え</p>
-      <button @click="currentComponent = 'Home'">Home</button>
-      <button @click="currentComponent = 'About'">About</button>
+      <p><button @click="currentComponent = 'Home'">Home</button></p>
+      <p><button @click="currentComponent = 'About'">About</button></p>
+      <p><button @click="currentComponent = 'LikeNumber'">LikeNumber</button></p>
+      <p><button @click="currentComponent = 'LikeHeader'">LikeHeader</button></p>
+      <p><button @click="currentComponent = ''">コンポーネントを削除</button></p>
+      <p>{{ currentComponent }}</p>
+
       <!-- 動的コンポーネント -->
       <!-- currentConponentで指定されているコンポーネントが表示される -->
-      <keep-alive>
+      <transition name="fade" mode="out-in" appear>
         <component :is="currentComponent"></component>
-      </keep-alive>
+      </transition>
       <div>
-        <!-- v-modelを使用してフォームを作成 -->
-        <h2>イベントのフォーム</h2>
-        <p>インプット</p>
-        <label for="title">タイトル</label>
-        <!-- .lazyはフォーカスが外れた時にv-modelを反映させるメソッド -->
-        <input
-        id="title"
-        type="text"
-        v-model.lazy="eventData.title"
-        >
-        <pre>{{ eventData.title }}</pre>
-
+        <EventTitle v-model="eventData.title"></EventTitle>
         <!-- .numberは数値型に変換してくれる -->
         <label for="maxNumber">最大人数</label>
         <input
@@ -40,7 +34,7 @@
         type="number"
         v-model.number="eventData.maxNumber"
         >
-        <pre>{{ typeof eventData.maxNumber }}</pre>
+        <pre>{{ eventData.maxNumber }}</pre>
 
         <!-- .trimは先頭と末尾の余白を削除してくれる -->
         <label for="host">主催者</label>
@@ -71,6 +65,8 @@
         <label for="isPrivate">非公開</label>
         <p>{{ eventData.isPrivate }}</p>
       </div>
+    <Animation></Animation>
+    <LikeFooter></LikeFooter>
   </div>
 </template>
 
@@ -78,12 +74,14 @@
 import LikeHeader from './components/LikeLHeader.vue';
 import About from './components/About.vue';
 import Home from './components/Home.vue';
+import EventTitle from './components/EventTitle.vue';
+import Animation from './components/Animation.vue';
 
 export default {
   data() {
     return {
-      number: 14,
-      currentComponent: 'Home',
+      number: 30,
+      currentComponent: '',
       eventData: {
         title: "",
         maxNumber: 0,
@@ -101,7 +99,9 @@ export default {
     // ↓LikeHeader: LikeHeaderの短縮系
     LikeHeader,
     About,
-    Home
+    Home,
+    EventTitle,
+    Animation,
   },
   methods: {
     incrementNumber(value) {
@@ -134,7 +134,7 @@ button {
   margin-right: 10px;
 }
 
-button:active {
+button:hover {
   margin-left: 5px;
   box-shadow: none;
 }
@@ -142,5 +142,31 @@ button:active {
 .flex {
   display: flex;
 }
+
+/* トランジション */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: opacity .5s;
+  }
+
+.fade-enter-to {
+  opacity: 1;
+}
+
+.fade-leave {
+  opacity: 1;
+  }
+
+.fade-leave-active {
+  transition: opacity .5s;
+  }
+
+.fade-leave-to {
+  opacity: 0;
+}
+
 
 </style>

@@ -7,11 +7,10 @@ import LikeFooter from './components/LikeFooter.vue'
 Vue.config.productionTip = false;
 // ↓コンポーネントをグローバル登録
 Vue.component('LikeNumber', LikeNumber);
-Vue.component('LikeFooter',        LikeFooter);
+Vue.component('LikeFooter', LikeFooter);
 Vue.filter("upperCase", function(value) {
   return value.toUpperCase();
 });
-
 
 new Vue({
   render: h => h(App),
