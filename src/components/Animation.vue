@@ -1,12 +1,35 @@
 <template>
   <div class="container">
-    <h3>{{ transition }}</h3>
+    <h3>{{ animation }}</h3>
 
     <button @click="myAnimation = 'slide'">Slide</button>
     <button @click="myAnimation = 'fade'">Fade</button>
     <p>{{ myAnimation }}</p>
     <button @click="show = !show">切り替え</button>
     <br>
+    <br>
+    <button @click="add">追加</button>
+    <ul style="width: 200px; margin: auto; cursor: pointer;">
+      <!-- 複数要素にトランジションを適用できる -->
+      <!-- 必ずkeyをつける必要がある -->
+      <transition-group name="slide" tag="div">
+        <li
+        v-for="(number, index) in numbers"
+        @click="remove(index)"
+        :key="number"
+        >{{ number }}</li>
+      </transition-group>
+    </ul>
+    <transition
+    :css="false"
+    @before-enter="beforeEnter"
+    @enter="enter"
+    @leave="leave"
+    >
+      <div
+      class="circle"
+      v-if="show"></div>
+    </transition>
 
     <button @click="myComponent = 'ComponentA'">ComponentA</button>
     <button @click="myComponent = 'ComponentB'">ComponentB</button>
@@ -63,11 +86,55 @@ export default {
   },
   data() {
     return {
-      transition: 'トランジションのコンポーネントです。',
+      animation: 'アニメーションのコンポーネントです。',
       show: true,
       myAnimation: '',
       myComponent: 'ComponentA',
+      numbers: [0, 1, 2],
+      nextNumber: 3,
     }
+  },
+  methods: {
+    randomIndex() {
+      return Math.floor(Math.random() * this.numbers.length);
+    },
+    add() {
+      this.numbers.splice(this.randomIndex(), 0, this.nextNumber);
+      this.nextNumber += 1;
+    },
+    remove(index) {
+      this.numbers.splice(index, 1);
+    },
+    // cssを使わない場合はdoneを必ずつける
+    beforeEnter(el) {
+      el.style.transform = 'scale(0)';
+    },
+    enter(el, done) {
+      let scale = 0;
+      const interval = setInterval(() => {
+        el.style.transform = `scale(${scale})`;
+        scale += 0.1
+        if( scale > 1) {
+          clearInterval(interval);
+          done();
+        }
+      }, 20);
+    },
+    leave(el, done) {
+      let scale = 1;
+      const interval = setInterval(() => {
+        el.style.transform = `scale(${scale})`;
+        scale -= 0.1
+        if( scale < 0 ) {
+          clearInterval(interval);
+          done();
+        }
+      }, 20);
+    },
+    // v-showのみ使用可能
+    leaveCancelled() {
+
+    },
   }
 }
 </script>
@@ -79,6 +146,14 @@ export default {
   /* background-color: #e3be82; */
   border-right: 5px solid #555;
   min-height: 400px;
+}
+
+.circle {
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  background-color: deeppink;
+  border-radius: 100px;
 }
 
 button {
@@ -96,10 +171,13 @@ button:hover {
 }
 
 /* トランジション */
+.fade-move {
+    transition: transform 1s;
+  }
+
 .fade-enter {
   opacity: 0;
 }
-
 .fade-enter-active {
   transition: opacity .5s;
   }
@@ -114,6 +192,7 @@ button:hover {
 
 .fade-leave-active {
   transition: opacity .5s;
+  position: absolute;
   }
 
 .fade-leave-to {
