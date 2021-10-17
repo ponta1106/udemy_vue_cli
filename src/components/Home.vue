@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>Home</h3>
     <p v-border.round.shadow.padding="{width: '0.1px', color: '#9fb2ba'}">{{ tmpData }}</p>
     <!-- main.jsで定義したfilterを適用 -->
     <h2>{{ title | lowerCase | upperCase }}</h2>

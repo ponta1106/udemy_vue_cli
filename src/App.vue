@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-view></router-view>
     <!-- コンポーネントはパスカルケースで書く -->
     <LikeHeader>
       <!-- v-slotを使用できるのはtemplateタグのみ -->

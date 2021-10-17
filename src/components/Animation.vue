@@ -7,19 +7,6 @@
     <p>{{ myAnimation }}</p>
     <button @click="show = !show">切り替え</button>
     <br>
-    <br>
-    <button @click="add">追加</button>
-    <ul style="width: 200px; margin: auto; cursor: pointer;">
-      <!-- 複数要素にトランジションを適用できる -->
-      <!-- 必ずkeyをつける必要がある -->
-      <transition-group name="slide" tag="div">
-        <li
-        v-for="(number, index) in numbers"
-        @click="remove(index)"
-        :key="number"
-        >{{ number }}</li>
-      </transition-group>
-    </ul>
     <transition
     :css="false"
     @before-enter="beforeEnter"
@@ -30,6 +17,7 @@
       class="circle"
       v-if="show"></div>
     </transition>
+    <br>
 
     <button @click="myComponent = 'ComponentA'">ComponentA</button>
     <button @click="myComponent = 'ComponentB'">ComponentB</button>
@@ -71,6 +59,19 @@
     >
       <p v-show="show">bye</p>
     </transition>
+    <br>
+    <button @click="add">追加</button>
+    <ul style="width: 200px; margin: auto; cursor: pointer;">
+    <!-- 複数要素にトランジションを適用できる -->
+    <!-- 必ずkeyをつける必要がある -->
+    <transition-group name="fade" tag="div">
+      <li
+      v-for="(number, index) in numbers"
+      @click="remove(index)"
+      :key="number"
+      >{{ number }}</li>
+    </transition-group>
+  </ul>
 
   </div>
 </template>
