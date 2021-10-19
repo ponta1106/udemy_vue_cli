@@ -9,6 +9,7 @@
     <p>{{ number }}</p>
     <button @click="number++">+1</button>
     <CountNumber></CountNumber>
+    <p>Vuexで表示した{{ count }}</p>
   </div>
 </template>
 
@@ -28,6 +29,11 @@ export default {
   },
   components: {
     CountNumber
+  },
+  computed: {
+    count() {
+      return this.$store.state.count
+    }
   },
   filters: {
     lowerCase(value) {

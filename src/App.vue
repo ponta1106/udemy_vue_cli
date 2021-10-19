@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-view name="header"></router-view>
     <router-view></router-view>
     <!-- コンポーネントはパスカルケースで書く -->
     <LikeHeader>
@@ -119,6 +120,14 @@ export default {
 
 body {
   background-color: #eee;
+}
+
+.link {
+  margin-right: 10px;
+}
+
+.link-active {
+  font-size: 20px;
 }
 
 div {
